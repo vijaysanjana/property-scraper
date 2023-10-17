@@ -1,12 +1,8 @@
 from bs4 import BeautifulSoup
+import requests
 
-html_file = """
-<html>
-    <body>
-        <h1>Hello!</h1>
-    </body>
-</html>
-"""
-soup = BeautifulSoup(html_doc, 'html.parser')
+URL = "https://salemdeeds.com/salemdeeds/SaleSearch.aspx"
+page = requests.get(URL)
+soup = BeautifulSoup(page.content, 'html.parser')
 
-print(soup.find('h1').get_text())
+print(soup.find('td').get_text())
