@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as soup
 headers={
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36'
 }
-url = 'https://corp.sec.state.ma.us/corpweb/CorpSearch/CorpSearch.aspx'
+url = 'https://massrods.com/middlesexnorth/'
 # nhdeeds.org, Hillsborough county
 # Send a GET request, and automatically handle SSL certificate verification
 response = requests.get(url, headers=headers)
