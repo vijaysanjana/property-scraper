@@ -24,6 +24,14 @@ def isLLC():
     # Search through public LLC records to verify whether an entity is a verified LLC
     return
 def toCSV():
+    # use beautiful soup to retrieve data
+
+    # create csv file
+
+    # get price 
+
+    # export all data into csv file
+    
     # parse through HTML and retrieve necessary data
     return
 
