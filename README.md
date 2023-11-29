@@ -12,7 +12,7 @@ pip install -r requirements.txt
 (Currently using firefox driver in my implementation)
 
 firefox-driver link:
-https://chromedriver.storage.googleapis.com/index.html?path=114.0.5735.90/
+https://github.com/mozilla/geckodriver/releases
 
 chrome-driver link:
 https://chromedriver.storage.googleapis.com/index.html?path=114.0.5735.90/
