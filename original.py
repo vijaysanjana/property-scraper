@@ -7,17 +7,20 @@ from selenium.webdriver.support.ui import Select
 import time
 import datetime
 import csv
+from flask import Flask, render_template, request, send_file
+import os
 
-county_id = "MiddlesexSouth"
-url = "https://www.masslandrecords.com/" + county_id + "/"
+
+# working county url_ids: MiddlesexNorth, MiddlesexSouth, BerkSouth, BerkNorth, BerkMiddle, Hampshire, Franklin, Dukes, Suffolk, Worcester, Nantucket
+url = "https://www.masslandrecords.com/MiddlesexSouth/"
 data = [["Doc. #", "Rec Date", "Rec Time", "Type Desc.", "# of Pgs.", "Book/Page", "Consideration", "Doc. Status", "Street #", "Street Name", "Description", "Grantor/Grantee"]]
-num_records = 2 #out of 100
-num_pages = 2
+from_date = "10/01/2023"
+num_records_per_page = 2 #out of 100
 
 #options = webdriver.ChromeOptions()
 #options.add_experimental_option("detach", True)
 #options.headless = True
-driver = webdriver.Chrome()
+driver = webdriver.Firefox()
 driver.get(url)
 
 time.sleep(2)
@@ -28,13 +31,13 @@ WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "Navigator1_S
 time.sleep(1)
 from_element = driver.find_element(By.ID,"SearchFormEx1_ACSTextBox_DateFrom")
 from_element.clear()
-from_element.send_keys("10/01/2023")
+from_element.send_keys(from_date)
 to_element = driver.find_element(By.ID,"SearchFormEx1_ACSTextBox_DateTo")
 to_element.clear()
 to_element.send_keys(datetime.date.today().strftime("%m/%d/%Y"))
 select = Select(driver.find_element(By.ID, 'SearchFormEx1_ACSDropDownList_DocumentType'))
-#select.select_by_visible_text('DEED')
-select.select_by_value("197")
+select.select_by_visible_text('DEED')
+#select.select_by_value("197")
 time.sleep(1)
 driver.find_element(By.NAME,"SearchFormEx1$btnSearch").click()
 
@@ -68,9 +71,9 @@ def getInfo():
     data.append(arr1+arr2+arr3)
 
 #loop through pages and records
-for j in range(2, (num_pages*2) + 1, 2):
+for j in range(2, (2*2) + 1, 2):
     try:
-        for i in range(1, num_records+1):
+        for i in range(1, num_records_per_page+1):
             WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "DocList1_GridView_Document_ctl0"+str(i+1)+"_ButtonRow_Rec. Date_"+str(i-1)))).click()
             time.sleep(1)
             try:
@@ -83,14 +86,8 @@ for j in range(2, (num_pages*2) + 1, 2):
         pass
 
 driver.quit()
+csv_path = os.path.join('clean_data.csv')
 
-with open("C:/Users/Harnish/Documents/Scope_10-2023/clean_data.csv", 'w', newline='') as csvfile:   
+with open(csv_path, 'w', newline='') as csvfile:   
     csvwriter = csv.writer(csvfile)
     csvwriter.writerows(data)
-
-
-
-
-
-
-
