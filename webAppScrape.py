@@ -85,15 +85,15 @@ def index():
                     else:
                         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, "DocList1_GridView_Document_ctl"+str(i+1)+"_ButtonRow_Rec. Date_"+str(i-1)))).click()
                     time.sleep(1)
-                    try:
-                        getInfo()
-                    except:
-                        pass
-                    time.sleep(1)
+                    # try:
+                    #     getInfo()
+                    # except:
+                    #     pass
+                    # time.sleep(1)
                 try:
                     driver.find_element(By.ID, "DocList1_ctl02_ctl0"+str(j)+"_LinkButtonNumber").click()
                 except:
-                    break
+                    pass
             except:
                 break
 
