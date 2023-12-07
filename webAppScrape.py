@@ -19,7 +19,7 @@ def index():
         county = request.form['county']
         # working county url_ids: MiddlesexNorth, MiddlesexSouth, BerkSouth, BerkNorth, BerkMiddle, Hampshire, Franklin, Dukes, Suffolk, Worcester, Nantucket
         url = "https://www.masslandrecords.com/" + county + "/"
-        data = [["Doc. #", "Rec Date", "Rec Time", "Type Desc.", "# of Pgs.", "Book/Page", "Consideration", "Doc. Status", "Street #", "Street Name", "Description", "Grantor/Grantee"]]
+        data = [["Doc. #", "Rec Date", "Rec Time", "Type Desc.", "# of Pgs.", "Book/Page", "Consideration", "Doc. Status", "Price", "Town", "Street #", "Street Name", "Description", "Grantor/Grantee"]]
         #from_date = "10/01/2023"
         num_records_per_page = 50 #out of 100
 
@@ -53,20 +53,22 @@ def index():
         time.sleep(1)
 
         #get data from individual records and store in array
-        def getInfo():
+        def getInfo(i):
             table_id = driver.find_element(By.ID, 'DocDetails1_Table_Details')
             row = table_id.find_element(By.TAG_NAME, "tr")
             col = row.find_elements(By.TAG_NAME, "td")[0].text
             arr1 = col.split("\n")[1].split(" ", 7)
-
+        
             table_id = driver.find_element(By.ID, 'DocDetails1_Table_Properties')
             row = table_id.find_element(By.TAG_NAME, "tr")
             col = row.find_elements(By.TAG_NAME, "td")[0].text
             arr2 = col.split("\n")[1].split(" ", 2)
-
+        
             table_id = driver.find_element(By.ID, 'DocDetails1_GridView_GrantorGrantee')
             rows = table_id.find_elements(By.TAG_NAME, "tr")
             arr3 = []
+        
+            town = driver.find_element(By.ID, 'DocList1_GridView_Document_ctl03_ButtonRow_Town_' + str(i-1))
             for row in rows:
                 try:
                     col1 = row.find_elements(By.TAG_NAME, "td")[0].text
@@ -74,7 +76,7 @@ def index():
                     arr3.append(col1+ " " +col2)
                 except:
                     pass
-            data.append(arr1+arr2+arr3)
+            data.append(arr1+["Price not avaliable",town.text]+arr2+arr3)
 
         #loop through pages and records
         for j in range(2, 21, 2):
@@ -86,7 +88,7 @@ def index():
                         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, "DocList1_GridView_Document_ctl"+str(i+1)+"_ButtonRow_Rec. Date_"+str(i-1)))).click()
                     time.sleep(1)
                     try:
-                        getInfo()
+                        getInfo(i)
                     except:
                         pass
                     time.sleep(1)
