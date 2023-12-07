@@ -21,7 +21,7 @@ https://chromedriver.storage.googleapis.com/index.html?path=114.0.5735.90/
 pip3 install -r requirements.txt
 
 ## To run the program
-python3 webScrapeApp.py
+python3 webAppScrape.py
 
 ### This program is designed to scrape latest records (max. 500) from the "from date" provided.
 ### Loading time: 2-3 Minutes for 100 records
