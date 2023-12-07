@@ -7,6 +7,9 @@ https://www.python.org/downloads/
 ## All package requirements mentioned in requirements.txt file, use the following command in terminal to download the requirement:
 pip install -r requirements.txt
 
+## To run the program
+python3 webScrapeApp.py
+
 ## One of these web-drivers is required for the web scraping package to work: 
 (The web-driver can exist anywhere on your computer, the web scraping package will identify its location)
 (Currently using firefox driver in my implementation)
