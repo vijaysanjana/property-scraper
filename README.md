@@ -18,7 +18,7 @@ https://chromedriver.storage.googleapis.com/index.html?path=114.0.5735.90/
 ### webAppScrape.py is the latest version with the web interface for the user to choose from various options
 
 ## All package requirements mentioned in requirements.txt file, use the following command in terminal to download the requirement:
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 ## To run the program
 python3 webScrapeApp.py
